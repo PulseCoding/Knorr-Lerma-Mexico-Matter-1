@@ -11,8 +11,6 @@ var secEOL=0,secPubNub=0,
     CntInWrapperBox = null;
 var Fillerct = null,
     Fillerresults = null,
-    CntInFiller = null,
-    CntOutFiller = null,
     Filleractual = 0,
     Fillertime = 0,
     Fillersec = 0,
@@ -22,14 +20,18 @@ var Fillerct = null,
     FillerspeedTemp = 0,
     FillerflagPrint = 0,
     FillersecStop = 0,
-    FillerONS = false,
-    FillertimeStop = 60, //NOTE: Timestop
-    FillerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    FillerflagRunning = false;
+    FillerdeltaRejected = null,
+    FillerONS = 0,
+    FillerStartTime = null,
+    FillertimeStop = 30, //NOTE: Timestop
+    FillerWorktime = 60, //NOTE: 60 si la máquina trabaja continuamente, 3 sí tarda entre 40 y 60 segundos en "operar"
+    FillerflagRunning = false,
+    FillerRejectFlag = false,
+    FillerReject,
+    CntOutFiller=null,
+    CntInFiller=null;
 var Capperct = null,
     Capperresults = null,
-    CntInCapper = null,
-    CntOutCapper = null,
     Capperactual = 0,
     Cappertime = 0,
     Cappersec = 0,
@@ -39,14 +41,18 @@ var Capperct = null,
     CapperspeedTemp = 0,
     CapperflagPrint = 0,
     CappersecStop = 0,
-    CapperONS = false,
-    CappertimeStop = 60, //NOTE: Timestop
-    CapperWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    CapperflagRunning = false;
+    CapperdeltaRejected = null,
+    CapperONS = 0,
+    CapperStartTime = null,
+    CappertimeStop = 30, //NOTE: Timestop
+    CapperWorktime = 60, //NOTE: 60 si la máquina trabaja continuamente, 3 sí tarda entre 40 y 60 segundos en "operar"
+    CapperflagRunning = false,
+    CapperRejectFlag = false,
+    CapperReject,
+    CntOutCapper=null,
+    CntInCapper=null;
 var Labellerct = null,
     Labellerresults = null,
-    CntInLabeller = null,
-    CntOutLabeller = null,
     Labelleractual = 0,
     Labellertime = 0,
     Labellersec = 0,
@@ -56,14 +62,18 @@ var Labellerct = null,
     LabellerspeedTemp = 0,
     LabellerflagPrint = 0,
     LabellersecStop = 0,
-    LabellerONS = false,
-    LabellertimeStop = 60, //NOTE: Timestop
-    LabellerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    LabellerflagRunning = false;
+    LabellerdeltaRejected = null,
+    LabellerONS = 0,
+    LabellerStartTime = null,
+    LabellertimeStop = 30, //NOTE: Timestop
+    LabellerWorktime = 60, //NOTE: 60 si la máquina trabaja continuamente, 3 sí tarda entre 40 y 60 segundos en "operar"
+    LabellerflagRunning = false,
+    LabellerRejectFlag = false,
+    LabellerReject,
+    CntOutLabeller=null,
+    CntInLabeller=null;
 var Lainerct = null,
     Lainerresults = null,
-    CntInLainer = null,
-    CntOutLainer = null,
     Laineractual = 0,
     Lainertime = 0,
     Lainersec = 0,
@@ -73,27 +83,37 @@ var Lainerct = null,
     LainerspeedTemp = 0,
     LainerflagPrint = 0,
     LainersecStop = 0,
-    LainerONS = false,
-    LainertimeStop = 60, //NOTE: Timestop
-    LainerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    LainerflagRunning = false;
-var XRay2ct = null,
-    XRay2results = null,
-    CntInXRay2 = null,
-    CntOutXRay2 = null,
-    XRay2actual = 0,
-    XRay2time = 0,
-    XRay2sec = 0,
-    XRay2flagStopped = false,
-    XRay2state = 0,
-    XRay2speed = 0,
-    XRay2speedTemp = 0,
-    XRay2flagPrint = 0,
-    XRay2secStop = 0,
-    XRay2ONS = false,
-    XRay2timeStop = 60, //NOTE: Timestop
-    XRay2Worktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    XRay2flagRunning = false;
+    LainerdeltaRejected = null,
+    LainerONS = 0,
+    LainerStartTime = null,
+    LainertimeStop = 30, //NOTE: Timestop
+    LainerWorktime = 60, //NOTE: 60 si la máquina trabaja continuamente, 3 sí tarda entre 40 y 60 segundos en "operar"
+    LainerflagRunning = false,
+    LainerRejectFlag = false,
+    LainerReject,
+    CntOutLainer=null,
+    CntInLainer=null;
+    var XRay2ct = null,
+        XRay2results = null,
+        XRay2actual = 0,
+        XRay2time = 0,
+        XRay2sec = 0,
+        XRay2flagStopped = false,
+        XRay2state = 0,
+        XRay2speed = 0,
+        XRay2speedTemp = 0,
+        XRay2flagPrint = 0,
+        XRay2secStop = 0,
+        XRay2deltaRejected = null,
+        XRay2ONS = 0,
+        XRay2StartTime = null,
+        XRay2timeStop = 30, //NOTE: Timestop
+        XRay2Worktime = 60, //NOTE: 60 si la máquina trabaja continuamente, 3 sí tarda entre 40 y 60 segundos en "operar"
+        XRay2flagRunning = false,
+        XRay2RejectFlag = false,
+        XRay2Reject,
+        CntOutXRay2=null,
+        CntInXRay2=null;
 var Wrapperct = null,
     Wrapperresults = null,
     CntOutWrapper = null,
@@ -186,6 +206,101 @@ setInterval(function(){
     'logEnabled': true,
     'reconnectTimeout' : 30000
   });
+  var FillerVerify = function(){
+        try{
+          FillerReject = fs.readFileSync('FillerRejected.json');
+          if(FillerReject.toString().indexOf('}') > 0 && FillerReject.toString().indexOf('{\"rejected\":') != -1){
+            FillerReject = JSON.parse(FillerReject);
+          }else{
+            throw 12121212;
+          }
+        }catch(err){
+          if(err.code == 'ENOENT' || err == 12121212){
+            fs.writeFileSync('FillerRejected.json','{"rejected":0}'); //NOTE: Change the object to what it usually is.
+            FillerReject = {
+              rejected : 0
+            };
+          }
+        }
+      };
+
+  FillerVerify();
+  var CapperVerify = function(){
+        try{
+          CapperReject = fs.readFileSync('CapperRejected.json');
+          if(CapperReject.toString().indexOf('}') > 0 && CapperReject.toString().indexOf('{\"rejected\":') != -1){
+            CapperReject = JSON.parse(CapperReject);
+          }else{
+            throw 12121212;
+          }
+        }catch(err){
+          if(err.code == 'ENOENT' || err == 12121212){
+            fs.writeFileSync('CapperRejected.json','{"rejected":0}'); //NOTE: Change the object to what it usually is.
+            CapperReject = {
+              rejected : 0
+            };
+          }
+        }
+      };
+
+  CapperVerify();
+  var LabellerVerify = function(){
+        try{
+          LabellerReject = fs.readFileSync('LabellerRejected.json');
+          if(LabellerReject.toString().indexOf('}') > 0 && LabellerReject.toString().indexOf('{\"rejected\":') != -1){
+            LabellerReject = JSON.parse(LabellerReject);
+          }else{
+            throw 12121212;
+          }
+        }catch(err){
+          if(err.code == 'ENOENT' || err == 12121212){
+            fs.writeFileSync('LabellerRejected.json','{"rejected":0}'); //NOTE: Change the object to what it usually is.
+            LabellerReject = {
+              rejected : 0
+            };
+          }
+        }
+      };
+
+  LabellerVerify();
+  var LainerVerify = function(){
+        try{
+          LainerReject = fs.readFileSync('LainerRejected.json');
+          if(LainerReject.toString().indexOf('}') > 0 && LainerReject.toString().indexOf('{\"rejected\":') != -1){
+            LainerReject = JSON.parse(LainerReject);
+          }else{
+            throw 12121212;
+          }
+        }catch(err){
+          if(err.code == 'ENOENT' || err == 12121212){
+            fs.writeFileSync('LainerRejected.json','{"rejected":0}'); //NOTE: Change the object to what it usually is.
+            LainerReject = {
+              rejected : 0
+            };
+          }
+        }
+      };
+
+  LainerVerify();
+  var XRay2Verify = function(){
+        try{
+          XRay2Reject = fs.readFileSync('XRay2Rejected.json');
+          if(XRay2Reject.toString().indexOf('}') > 0 && XRay2Reject.toString().indexOf('{\"rejected\":') != -1){
+            XRay2Reject = JSON.parse(XRay2Reject);
+          }else{
+            throw 12121212;
+          }
+        }catch(err){
+          if(err.code == 'ENOENT' || err == 12121212){
+            fs.writeFileSync('XRay2Rejected.json','{"rejected":0}'); //NOTE: Change the object to what it usually is.
+            XRay2Reject = {
+              rejected : 0
+            };
+          }
+        }
+      };
+
+  XRay2Verify();
 
   client1.connect();
   client2.connect();
@@ -216,63 +331,82 @@ setInterval(function(){
             CntInFiller = joinWord(resp.register[0], resp.register[1]);
             CntOutFiller =  joinWord(resp.register[2], resp.register[3]);
         //------------------------------------------Filler----------------------------------------------
-              Fillerct = CntOutFiller // NOTE: igualar al contador de salida
-              if (!FillerONS && Fillerct) {
-                FillerspeedTemp = Fillerct
-                Fillersec = Date.now()
-                FillerONS = true
-                Fillertime = Date.now()
+        //------------------------------------------Filler----------------------------------------------
+              Fillerct = CntOutFiller; // NOTE: igualar al contador de salida
+              if (FillerONS == 0 && Fillerct) {
+                FillerspeedTemp = Fillerct;
+                FillerStartTime = Date.now();
+                FillerONS = 1;
               }
               if(Fillerct > Filleractual){
                 if(FillerflagStopped){
-                  Fillerspeed = Fillerct - FillerspeedTemp
-                  FillerspeedTemp = Fillerct
-                  Fillersec = Date.now()
-                  Fillertime = Date.now()
+                  Fillerspeed = Fillerct -FillerspeedTemp;
+                  FillerspeedTemp = Fillerct;
+                  Fillersec = 0;
+                  FillerStartTime = Date.now();
+                  FillerdeltaRejected = null;
+                  FillerRejectFlag = false;
                 }
-                FillersecStop = 0
-                Fillerstate = 1
-                FillerflagStopped = false
-                FillerflagRunning = true
+                FillersecStop = 0;
+                Fillersec++;
+                Fillertime = Date.now();
+                Fillerstate = 1;
+                FillerflagStopped = false;
+                FillerflagRunning = true;
               } else if( Fillerct == Filleractual ){
                 if(FillersecStop == 0){
-                  Fillertime = Date.now()
-                  FillersecStop = Date.now()
+                  Fillertime = Date.now();
                 }
-                if( ( Date.now() - ( FillertimeStop * 1000 ) ) >= FillersecStop ){
-                  Fillerspeed = 0
-                  Fillerstate = 2
-                  FillerspeedTemp = Fillerct
-                  FillerflagStopped = true
-                  FillerflagRunning = false
-                  FillerflagPrint = 1
+                FillersecStop++;
+                if(FillersecStop >= FillertimeStop){
+                  Fillerspeed = 0;
+                  Fillerstate = 2;
+                  FillerspeedTemp = Fillerct;
+                  FillerflagStopped = true;
+                  FillerflagRunning = false;
+
+                  if(CntInFiller - CntOutFiller - FillerReject.rejected != 0 && ! FillerRejectFlag){
+                    FillerdeltaRejected = CntInFiller - CntOutFiller - FillerReject.rejected;
+                    FillerReject.rejected = CntInFiller - CntOutFiller;
+                    fs.writeFileSync('FillerRejected.json','{"rejected": ' + FillerReject.rejected + '}');
+                    FillerRejectFlag = true;
+                  }else{
+                    FillerdeltaRejected = null;
+                  }
+                }
+                if(FillersecStop % (FillertimeStop * 3) == 0 ||FillersecStop == FillertimeStop ){
+                  FillerflagPrint=1;
+
+                  if(FillersecStop % (FillertimeStop * 3) == 0){
+                    Fillertime = Date.now();
+                    FillerdeltaRejected = null;
+                  }
                 }
               }
-              Filleractual = Fillerct
-              if(Date.now() - 60000 * FillerWorktime >= Fillersec && FillersecStop == 0){
+              Filleractual = Fillerct;
+              if(Fillersec == FillerWorktime){
+                Fillersec = 0;
                 if(FillerflagRunning && Fillerct){
-                  FillerflagPrint = 1
-                  FillersecStop = 0
-                  Fillerspeed = Fillerct - FillerspeedTemp
-                  FillerspeedTemp = Fillerct
-                  Fillersec = Date.now()
+                  FillerflagPrint = 1;
+                  FillersecStop = 0;
+                  Fillerspeed = Math.floor( (Fillerct - FillerspeedTemp) / (Date.now() - FillerStartTime) * 60000 );
+                  FillerspeedTemp = Fillerct;
                 }
               }
               Fillerresults = {
                 ST: Fillerstate,
                 CPQI: CntInFiller,
                 CPQO: CntOutFiller,
+                CPQR: FillerdeltaRejected,
                 SP: Fillerspeed
-              }
+              };
               if (FillerflagPrint == 1) {
                 for (var key in Fillerresults) {
-                  if( Fillerresults[key] != null && ! isNaN(Fillerresults[key]) )
+                  if(Fillerresults[key]!=null&&!isNaN(Fillerresults[key]))
                   //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Filler_matter1.log', 'tt=' + Fillertime + ',var=' + key + ',val=' + Fillerresults[key] + '\n')
+                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Filler_matter1.log', 'tt=' + Fillertime + ',var=' + key + ',val=' + Fillerresults[key] + '\n');
                 }
-                FillerflagPrint = 0
-                FillersecStop = 0
-                Fillertime = Date.now()
+                FillerflagPrint = 0;
               }
         //------------------------------------------Filler----------------------------------------------
 
@@ -300,183 +434,239 @@ setInterval(function(){
           CntInCapper = CntOutFiller;
           CntInLainer = CntOutLabeller;
         //------------------------------------------Capper----------------------------------------------
-              Capperct = CntOutCapper // NOTE: igualar al contador de salida
-              if (!CapperONS && Capperct) {
-                CapperspeedTemp = Capperct
-                Cappersec = Date.now()
-                CapperONS = true
-                Cappertime = Date.now()
+        //------------------------------------------Capper----------------------------------------------
+              Capperct = CntOutCapper; // NOTE: igualar al contador de salida
+              if (CapperONS == 0 && Capperct) {
+                CapperspeedTemp = Capperct;
+                CapperStartTime = Date.now();
+                CapperONS = 1;
               }
               if(Capperct > Capperactual){
                 if(CapperflagStopped){
-                  Capperspeed = Capperct - CapperspeedTemp
-                  CapperspeedTemp = Capperct
-                  Cappersec = Date.now()
-                  Cappertime = Date.now()
+                  Capperspeed = Capperct -CapperspeedTemp;
+                  CapperspeedTemp = Capperct;
+                  Cappersec = 0;
+                  CapperStartTime = Date.now();
+                  CapperdeltaRejected = null;
+                  CapperRejectFlag = false;
                 }
-                CappersecStop = 0
-                Capperstate = 1
-                CapperflagStopped = false
-                CapperflagRunning = true
+                CappersecStop = 0;
+                Cappersec++;
+                Cappertime = Date.now();
+                Capperstate = 1;
+                CapperflagStopped = false;
+                CapperflagRunning = true;
               } else if( Capperct == Capperactual ){
                 if(CappersecStop == 0){
-                  Cappertime = Date.now()
-                  CappersecStop = Date.now()
+                  Cappertime = Date.now();
                 }
-                if( ( Date.now() - ( CappertimeStop * 1000 ) ) >= CappersecStop ){
-                  Capperspeed = 0
-                  Capperstate = 2
-                  CapperspeedTemp = Capperct
-                  CapperflagStopped = true
-                  CapperflagRunning = false
-                  CapperflagPrint = 1
+                CappersecStop++;
+                if(CappersecStop >= CappertimeStop){
+                  Capperspeed = 0;
+                  Capperstate = 2;
+                  CapperspeedTemp = Capperct;
+                  CapperflagStopped = true;
+                  CapperflagRunning = false;
+
+                  if(CntInCapper - CntOutCapper - CapperReject.rejected != 0 && ! CapperRejectFlag){
+                    CapperdeltaRejected = CntInCapper - CntOutCapper - CapperReject.rejected;
+                    CapperReject.rejected = CntInCapper - CntOutCapper;
+                    fs.writeFileSync('CapperRejected.json','{"rejected": ' + CapperReject.rejected + '}');
+                    CapperRejectFlag = true;
+                  }else{
+                    CapperdeltaRejected = null;
+                  }
+                }
+                if(CappersecStop % (CappertimeStop * 3) == 0 ||CappersecStop == CappertimeStop ){
+                  CapperflagPrint=1;
+
+                  if(CappersecStop % (CappertimeStop * 3) == 0){
+                    Cappertime = Date.now();
+                    CapperdeltaRejected = null;
+                  }
                 }
               }
-              Capperactual = Capperct
-              if(Date.now() - 60000 * CapperWorktime >= Cappersec && CappersecStop == 0){
+              Capperactual = Capperct;
+              if(Cappersec == CapperWorktime){
+                Cappersec = 0;
                 if(CapperflagRunning && Capperct){
-                  CapperflagPrint = 1
-                  CappersecStop = 0
-                  Capperspeed = Capperct - CapperspeedTemp
-                  CapperspeedTemp = Capperct
-                  Cappersec = Date.now()
+                  CapperflagPrint = 1;
+                  CappersecStop = 0;
+                  Capperspeed = Math.floor( (Capperct - CapperspeedTemp) / (Date.now() - CapperStartTime) * 60000 );
+                  CapperspeedTemp = Capperct;
                 }
               }
               Capperresults = {
                 ST: Capperstate,
                 CPQI: CntInCapper,
                 CPQO: CntOutCapper,
+                CPQR: CapperdeltaRejected,
                 SP: Capperspeed
-              }
+              };
               if (CapperflagPrint == 1) {
                 for (var key in Capperresults) {
-                  if( Capperresults[key] != null && ! isNaN(Capperresults[key]) )
+                  if(Capperresults[key]!=null&&!isNaN(Capperresults[key]))
                   //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Capper_matter1.log', 'tt=' + Cappertime + ',var=' + key + ',val=' + Capperresults[key] + '\n')
+                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Capper_matter1.log', 'tt=' + Cappertime + ',var=' + key + ',val=' + Capperresults[key] + '\n');
                 }
-                CapperflagPrint = 0
-                CappersecStop = 0
-                Cappertime = Date.now()
+                CapperflagPrint = 0;
               }
         //------------------------------------------Capper----------------------------------------------
+
         //------------------------------------------Labeller----------------------------------------------
-              Labellerct = CntOutLabeller // NOTE: igualar al contador de salida
-              if (!LabellerONS && Labellerct) {
-                LabellerspeedTemp = Labellerct
-                Labellersec = Date.now()
-                LabellerONS = true
-                Labellertime = Date.now()
+              Labellerct = CntOutLabeller; //NOTE: igualar al contador de salida
+              if (LabellerONS == 0 && Labellerct) {
+                LabellerspeedTemp = Labellerct;
+                LabellerStartTime = Date.now();
+                LabellerONS = 1;
               }
               if(Labellerct > Labelleractual){
                 if(LabellerflagStopped){
-                  Labellerspeed = Labellerct - LabellerspeedTemp
-                  LabellerspeedTemp = Labellerct
-                  Labellersec = Date.now()
-                  Labellertime = Date.now()
+                  Labellerspeed = Labellerct -LabellerspeedTemp;
+                  LabellerspeedTemp = Labellerct;
+                  Labellersec = 0;
+                  LabellerStartTime = Date.now();
+                  LabellerdeltaRejected = null;
+                  LabellerRejectFlag = false;
                 }
-                LabellersecStop = 0
-                Labellerstate = 1
-                LabellerflagStopped = false
-                LabellerflagRunning = true
+                LabellersecStop = 0;
+                Labellersec++;
+                Labellertime = Date.now();
+                Labellerstate = 1;
+                LabellerflagStopped = false;
+                LabellerflagRunning = true;
               } else if( Labellerct == Labelleractual ){
                 if(LabellersecStop == 0){
-                  Labellertime = Date.now()
-                  LabellersecStop = Date.now()
+                  Labellertime = Date.now();
                 }
-                if( ( Date.now() - ( LabellertimeStop * 1000 ) ) >= LabellersecStop ){
-                  Labellerspeed = 0
-                  Labellerstate = 2
-                  LabellerspeedTemp = Labellerct
-                  LabellerflagStopped = true
-                  LabellerflagRunning = false
-                  LabellerflagPrint = 1
+                LabellersecStop++;
+                if(LabellersecStop >= LabellertimeStop){
+                  Labellerspeed = 0;
+                  Labellerstate = 2;
+                  LabellerspeedTemp = Labellerct;
+                  LabellerflagStopped = true;
+                  LabellerflagRunning = false;
+
+                  if(CntInLabeller - CntOutLabeller - LabellerReject.rejected != 0 && ! LabellerRejectFlag){
+                    LabellerdeltaRejected = CntInLabeller - CntOutLabeller - LabellerReject.rejected;
+                    LabellerReject.rejected = CntInLabeller - CntOutLabeller;
+                    fs.writeFileSync('LabellerRejected.json','{"rejected": ' + LabellerReject.rejected + '}');
+                    LabellerRejectFlag = true;
+                  }else{
+                    LabellerdeltaRejected = null;
+                  }
+                }
+                if(LabellersecStop % (LabellertimeStop * 3) == 0 ||LabellersecStop == LabellertimeStop ){
+                  LabellerflagPrint=1;
+
+                  if(LabellersecStop % (LabellertimeStop * 3) == 0){
+                    Labellertime = Date.now();
+                    LabellerdeltaRejected = null;
+                  }
                 }
               }
-              Labelleractual = Labellerct
-              if(Date.now() - 60000 * LabellerWorktime >= Labellersec && LabellersecStop == 0){
+              Labelleractual = Labellerct;
+              if(Labellersec == LabellerWorktime){
+                Labellersec = 0;
                 if(LabellerflagRunning && Labellerct){
-                  LabellerflagPrint = 1
-                  LabellersecStop = 0
-                  Labellerspeed = Labellerct - LabellerspeedTemp
-                  LabellerspeedTemp = Labellerct
-                  Labellersec = Date.now()
+                  LabellerflagPrint = 1;
+                  LabellersecStop = 0;
+                  Labellerspeed = Math.floor( (Labellerct - LabellerspeedTemp) / (Date.now() - LabellerStartTime) * 60000 );
+                  LabellerspeedTemp = Labellerct;
                 }
               }
               Labellerresults = {
                 ST: Labellerstate,
                 CPQI: CntInLabeller,
                 CPQO: CntOutLabeller,
+                CPQR: LabellerdeltaRejected,
                 SP: Labellerspeed
-              }
+              };
               if (LabellerflagPrint == 1) {
                 for (var key in Labellerresults) {
-                  if( Labellerresults[key] != null && ! isNaN(Labellerresults[key]) )
+                  if(Labellerresults[key]!=null&&!isNaN(Labellerresults[key]))
                   //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Labeller_matter1.log', 'tt=' + Labellertime + ',var=' + key + ',val=' + Labellerresults[key] + '\n')
+                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Labeller_matter1.log', 'tt=' + Labellertime + ',var=' + key + ',val=' + Labellerresults[key] + '\n');
                 }
-                LabellerflagPrint = 0
-                LabellersecStop = 0
-                Labellertime = Date.now()
+                LabellerflagPrint = 0;
               }
         //------------------------------------------Labeller----------------------------------------------
         //------------------------------------------Lainer----------------------------------------------
-              Lainerct = CntOutLainer // NOTE: igualar al contador de salida
-              if (!LainerONS && Lainerct) {
-                LainerspeedTemp = Lainerct
-                Lainersec = Date.now()
-                LainerONS = true
-                Lainertime = Date.now()
+              Lainerct = CntOutLainer; // NOTE: igualar al contador de salida
+              if (LainerONS == 0 && Lainerct) {
+                LainerspeedTemp = Lainerct;
+                LainerStartTime = Date.now();
+                LainerONS = 1;
               }
               if(Lainerct > Laineractual){
                 if(LainerflagStopped){
-                  Lainerspeed = Lainerct - LainerspeedTemp
-                  LainerspeedTemp = Lainerct
-                  Lainersec = Date.now()
-                  Lainertime = Date.now()
+                  Lainerspeed = Lainerct -LainerspeedTemp;
+                  LainerspeedTemp = Lainerct;
+                  Lainersec = 0;
+                  LainerStartTime = Date.now();
+                  LainerdeltaRejected = null;
+                  LainerRejectFlag = false;
                 }
-                LainersecStop = 0
-                Lainerstate = 1
-                LainerflagStopped = false
-                LainerflagRunning = true
+                LainersecStop = 0;
+                Lainersec++;
+                Lainertime = Date.now();
+                Lainerstate = 1;
+                LainerflagStopped = false;
+                LainerflagRunning = true;
               } else if( Lainerct == Laineractual ){
                 if(LainersecStop == 0){
-                  Lainertime = Date.now()
-                  LainersecStop = Date.now()
+                  Lainertime = Date.now();
                 }
-                if( ( Date.now() - ( LainertimeStop * 1000 ) ) >= LainersecStop ){
-                  Lainerspeed = 0
-                  Lainerstate = 2
-                  LainerspeedTemp = Lainerct
-                  LainerflagStopped = true
-                  LainerflagRunning = false
-                  LainerflagPrint = 1
+                LainersecStop++;
+                if(LainersecStop >= LainertimeStop){
+                  Lainerspeed = 0;
+                  Lainerstate = 2;
+                  LainerspeedTemp = Lainerct;
+                  LainerflagStopped = true;
+                  LainerflagRunning = false;
+
+                  if(CntInLainer - CntOutLainer - LainerReject.rejected != 0 && ! LainerRejectFlag){
+                    LainerdeltaRejected = CntInLainer - CntOutLainer - LainerReject.rejected;
+                    LainerReject.rejected = CntInLainer - CntOutLainer;
+                    fs.writeFileSync('LainerRejected.json','{"rejected": ' + LainerReject.rejected + '}');
+                    LainerRejectFlag = true;
+                  }else{
+                    LainerdeltaRejected = null;
+                  }
+                }
+                if(LainersecStop % (LainertimeStop * 3) == 0 ||LainersecStop == LainertimeStop ){
+                  LainerflagPrint=1;
+
+                  if(LainersecStop % (LainertimeStop * 3) == 0){
+                    Lainertime = Date.now();
+                    LainerdeltaRejected = null;
+                  }
                 }
               }
-              Laineractual = Lainerct
-              if(Date.now() - 60000 * LainerWorktime >= Lainersec && LainersecStop == 0){
+              Laineractual = Lainerct;
+              if(Lainersec == LainerWorktime){
+                Lainersec = 0;
                 if(LainerflagRunning && Lainerct){
-                  LainerflagPrint = 1
-                  LainersecStop = 0
-                  Lainerspeed = Lainerct - LainerspeedTemp
-                  LainerspeedTemp = Lainerct
-                  Lainersec = Date.now()
+                  LainerflagPrint = 1;
+                  LainersecStop = 0;
+                  Lainerspeed = Math.floor( (Lainerct - LainerspeedTemp) / (Date.now() - LainerStartTime) * 60000 );
+                  LainerspeedTemp = Lainerct;
                 }
               }
               Lainerresults = {
                 ST: Lainerstate,
                 CPQI: CntInLainer,
                 CPQO: CntOutLainer,
+                CPQR: LainerdeltaRejected,
                 SP: Lainerspeed
-              }
+              };
               if (LainerflagPrint == 1) {
                 for (var key in Lainerresults) {
-                  if( Lainerresults[key] != null && ! isNaN(Lainerresults[key]) )
+                  if(Lainerresults[key]!=null&&!isNaN(Lainerresults[key]))
                   //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Lainer_matter1.log', 'tt=' + Lainertime + ',var=' + key + ',val=' + Lainerresults[key] + '\n')
+                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_Lainer_matter1.log', 'tt=' + Lainertime + ',var=' + key + ',val=' + Lainerresults[key] + '\n');
                 }
-                LainerflagPrint = 0
-                LainersecStop = 0
-                Lainertime = Date.now()
+                LainerflagPrint = 0;
               }
         //------------------------------------------Lainer----------------------------------------------
         });//Cierre de lectura
@@ -502,64 +692,83 @@ setInterval(function(){
                   CntInWrapperBox = joinWord(resp.register[8], resp.register[9]);
                   CntOutXRay2 = CntInWrapperBottle;
                   CntInXRay2 = CntOutLainer;
+
         //------------------------------------------XRay2----------------------------------------------
-              XRay2ct = CntOutXRay2 // NOTE: igualar al contador de salida
-              if (!XRay2ONS && XRay2ct) {
-                XRay2speedTemp = XRay2ct
-                XRay2sec = Date.now()
-                XRay2ONS = true
-                XRay2time = Date.now()
+              XRay2ct = CntOutXRay2; // NOTE: igualar al contador de salida
+              if (XRay2ONS == 0 && XRay2ct) {
+                XRay2speedTemp = XRay2ct;
+                XRay2StartTime = Date.now();
+                XRay2ONS = 1;
               }
               if(XRay2ct > XRay2actual){
                 if(XRay2flagStopped){
-                  XRay2speed = XRay2ct - XRay2speedTemp
-                  XRay2speedTemp = XRay2ct
-                  XRay2sec = Date.now()
-                  XRay2time = Date.now()
+                  XRay2speed = XRay2ct -XRay2speedTemp;
+                  XRay2speedTemp = XRay2ct;
+                  XRay2sec = 0;
+                  XRay2StartTime = Date.now();
+                  XRay2deltaRejected = null;
+                  XRay2RejectFlag = false;
                 }
-                XRay2secStop = 0
-                XRay2state = 1
-                XRay2flagStopped = false
-                XRay2flagRunning = true
+                XRay2secStop = 0;
+                XRay2sec++;
+                XRay2time = Date.now();
+                XRay2state = 1;
+                XRay2flagStopped = false;
+                XRay2flagRunning = true;
               } else if( XRay2ct == XRay2actual ){
                 if(XRay2secStop == 0){
-                  XRay2time = Date.now()
-                  XRay2secStop = Date.now()
+                  XRay2time = Date.now();
                 }
-                if( ( Date.now() - ( XRay2timeStop * 1000 ) ) >= XRay2secStop ){
-                  XRay2speed = 0
-                  XRay2state = 2
-                  XRay2speedTemp = XRay2ct
-                  XRay2flagStopped = true
-                  XRay2flagRunning = false
-                  XRay2flagPrint = 1
+                XRay2secStop++;
+                if(XRay2secStop >= XRay2timeStop){
+                  XRay2speed = 0;
+                  XRay2state = 2;
+                  XRay2speedTemp = XRay2ct;
+                  XRay2flagStopped = true;
+                  XRay2flagRunning = false;
+
+                  if(CntInXRay2 - CntOutXRay2 - XRay2Reject.rejected != 0 && ! XRay2RejectFlag){
+                    XRay2deltaRejected = CntInXRay2 - CntOutXRay2 - XRay2Reject.rejected;
+                    XRay2Reject.rejected = CntInXRay2 - CntOutXRay2;
+                    fs.writeFileSync('XRay2Rejected.json','{"rejected": ' + XRay2Reject.rejected + '}');
+                    XRay2RejectFlag = true;
+                  }else{
+                    XRay2deltaRejected = null;
+                  }
+                }
+                if(XRay2secStop % (XRay2timeStop * 3) == 0 ||XRay2secStop == XRay2timeStop ){
+                  XRay2flagPrint=1;
+
+                  if(XRay2secStop % (XRay2timeStop * 3) == 0){
+                    XRay2time = Date.now();
+                    XRay2deltaRejected = null;
+                  }
                 }
               }
-              XRay2actual = XRay2ct
-              if(Date.now() - 60000 * XRay2Worktime >= XRay2sec && XRay2secStop == 0){
+              XRay2actual = XRay2ct;
+              if(XRay2sec == XRay2Worktime){
+                XRay2sec = 0;
                 if(XRay2flagRunning && XRay2ct){
-                  XRay2flagPrint = 1
-                  XRay2secStop = 0
-                  XRay2speed = XRay2ct - XRay2speedTemp
-                  XRay2speedTemp = XRay2ct
-                  XRay2sec = Date.now()
+                  XRay2flagPrint = 1;
+                  XRay2secStop = 0;
+                  XRay2speed = Math.floor( (XRay2ct - XRay2speedTemp) / (Date.now() - XRay2StartTime) * 60000 );
+                  XRay2speedTemp = XRay2ct;
                 }
               }
               XRay2results = {
                 ST: XRay2state,
                 CPQI: CntInXRay2,
                 CPQO: CntOutXRay2,
+                CPQR: XRay2deltaRejected,
                 SP: XRay2speed
-              }
+              };
               if (XRay2flagPrint == 1) {
                 for (var key in XRay2results) {
-                  if( XRay2results[key] != null && ! isNaN(XRay2results[key]) )
+                  if(XRay2results[key]!=null&&!isNaN(XRay2results[key]))
                   //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_XRay2_matter1.log', 'tt=' + XRay2time + ',var=' + key + ',val=' + XRay2results[key] + '\n')
+                  fs.appendFileSync('C:/PULSE/MATTER1_LOGS/mex_ler_XRay2_matter1.log', 'tt=' + XRay2time + ',var=' + key + ',val=' + XRay2results[key] + '\n');
                 }
-                XRay2flagPrint = 0
-                XRay2secStop = 0
-                XRay2time = Date.now()
+                XRay2flagPrint = 0;
               }
         //------------------------------------------XRay2----------------------------------------------
         //------------------------------------------Wrapper----------------------------------------------
