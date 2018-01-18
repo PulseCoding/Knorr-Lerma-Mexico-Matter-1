@@ -396,7 +396,7 @@ setInterval(function(){
               Fillerresults = {
                 ST: Fillerstate,
                 CPQI: CntInFiller,
-                CPQO: CntOutFiller,
+                CPQO: CntInFiller,//CntOutFiller,
                 CPQR: FillerdeltaRejected,
                 SP: Fillerspeed
               };
