@@ -329,7 +329,7 @@ setInterval(function(){
 
           client1.readHoldingRegisters(0, 16).then(function(resp) {
             CntInFiller = joinWord(resp.register[0], resp.register[1]);
-            CntOutFiller =  joinWord(resp.register[2], resp.register[3]);
+            CntOutFiller =  joinWord(resp.register[4], resp.register[5])+joinWord(resp.register[6], resp.register[7]);
         //------------------------------------------Filler----------------------------------------------
         //------------------------------------------Filler----------------------------------------------
               Fillerct = CntOutFiller; // NOTE: igualar al contador de salida
@@ -395,9 +395,9 @@ setInterval(function(){
               }
               Fillerresults = {
                 ST: Fillerstate,
-                CPQI: CntInFiller,
-                CPQO: CntInFiller,//CntOutFiller,
-                CPQR: FillerdeltaRejected,
+                CPQI: CntOutFiller,
+                CPQO: CntOutFiller,//CntOutFiller,
+                //CPQR: FillerdeltaRejected,
                 SP: Fillerspeed
               };
               if (FillerflagPrint == 1) {
